@@ -1,9 +1,18 @@
 package ingredient
 
-import "database/sql"
+import (
+	"database/sql"
+	"log"
+	"fmt"
+)
 
-var connection *sql.DB
+var db *sql.DB
 
-func setConnectionPool(pool *sql.DB){
-	connection = pool
+func Start(pool *sql.DB){
+	db = pool
+	query := fmt.Sprintf("Create table if not exists %s (%s serial PRIMARY KEY, %s varchar(40) UNIQUE, %s text)", IngredientTable, I_ID, I_name, I_description)
+	_, err := db.Exec(query)
+	if err != nil {
+		log.Fatal(err)
+	}
 }

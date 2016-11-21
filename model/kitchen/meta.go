@@ -2,9 +2,8 @@ package kitchen
 
 const (
 	KitchenTable = "kitchen"
-	DishTable = "dish"
-	IngredientTable = "ingredient"
-	DKTable = "dish_kitchen"
-	DITable = "dish_ingredient"
+	K_ID = "id"
+	K_name = "name"
+	K_description = "description"
 )
 

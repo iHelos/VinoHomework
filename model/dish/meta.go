@@ -1,11 +1,17 @@
 package dish
 
 const (
+	CategoryTable = "category"
+	C_ID = "id"
+	C_Name = "name"
+
 	DishTable = "dish"
+
 	D_ID = "id"
 	D_Name = "name"
 	D_Description = "description"
 	D_Price = "price"
+	D_Category = "category_id"
 
 	DKTable = "dish_kitchen"
 	DK_ID = "id"
