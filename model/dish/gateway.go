@@ -66,8 +66,7 @@ func (gate *dishGateway) Update() error{
 }
 
 func makeQuery(tx *sql.Tx, query string, paramerer interface{}) error{
-	tx, err := db.Begin()
-	_, err = tx.Exec(query, paramerer)
+	_, err := tx.Exec(query, paramerer)
 	if err!= nil{
 		tx.Rollback()
 		return err

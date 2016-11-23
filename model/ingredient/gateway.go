@@ -5,6 +5,7 @@ import (
 	"errors"
 	"database/sql"
 	. "github.com/iHelos/VinoHomework/model"
+	"github.com/labstack/gommon/log"
 )
 
 type ingredientGateway struct {
@@ -49,15 +50,16 @@ func (gate *ingredientGateway) Update() error{
 	if gate.inDB == false{
 		return errors.New("object not created")
 	}
-	q := fmt.Sprintf("UPDATE %s SET %s = $1, %s = $2 WHERE %s = $5;", IngredientTable, I_name, I_description, I_ID)
+	q := fmt.Sprintf("UPDATE %s SET %s = $1, %s = $2 WHERE %s = $3;", IngredientTable, I_name, I_description, I_ID)
 	_, err := db.Exec(q, gate.Name, gate.Description, gate.ID)
 	return err
 }
 
 func makeQuery(tx *sql.Tx, query string, paramerer interface{}) error{
-	tx, err := db.Begin()
-	_, err = tx.Exec(query, paramerer)
+	//tx, err := db.Begin()
+	_, err := tx.Exec(query, paramerer)
 	if err!= nil{
+		log.Print(err)
 		tx.Rollback()
 		return err
 	}
@@ -65,7 +67,7 @@ func makeQuery(tx *sql.Tx, query string, paramerer interface{}) error{
 }
 
 
-func (gate *ingredientGateway) Remove() error{
+func (gate *ingredientGateway)  Remove() error{
 	if gate.inDB == false{
 		return errors.New("object not created")
 	}
@@ -73,10 +75,14 @@ func (gate *ingredientGateway) Remove() error{
 	q1 := fmt.Sprintf("DELETE FROM %s WHERE %s = $1;", DITable, DI_dish_ID)
 	q2 := fmt.Sprintf("DELETE FROM %s WHERE %s = $1;", IngredientTable, I_ID)
 	tx, err := db.Begin()
+	if err!=nil{
+		return err
+	}
 	err = makeQuery(tx, q1, gate.ID)
 	if err!= nil{
 		return err
 	}
+	log.Print(gate.ID)
 	err = makeQuery(tx, q2, gate.ID)
 	if err!= nil{
 		return err

@@ -49,13 +49,13 @@ func main() {
 	//DELETE
 
 	iris.Post("/dish/delete/:id", func(ctx *iris.Context) {
-		control.CreateDish(ctx)
+		control.RemoveDish(ctx)
 	})
 	iris.Post("/ingredient/delete/:id", func(ctx *iris.Context) {
-		control.CreateIngredient(ctx)
+		control.RemoveIngredient(ctx)
 	})
 	iris.Post("/kitchen/delete/:id", func(ctx *iris.Context) {
-		control.CreateKitchen(ctx)
+		control.RemoveKitchen(ctx)
 	})
 
 	//READ
@@ -72,14 +72,14 @@ func main() {
 
 	//UPDATE
 
-	iris.Get("/dish/update/:id", func(ctx *iris.Context) {
-		control.CreateDish(ctx)
+	iris.Post("/dish/update/:id", func(ctx *iris.Context) {
+		control.UpdateDish(ctx)
 	})
-	iris.Get("/ingredient/update/:id", func(ctx *iris.Context) {
-		control.CreateIngredient(ctx)
+	iris.Post("/ingredient/update/:id", func(ctx *iris.Context) {
+		control.UpdateIngredient(ctx)
 	})
-	iris.Get("/kitchen/update/:id", func(ctx *iris.Context) {
-		control.CreateKitchen(ctx)
+	iris.Post("/kitchen/update/:id", func(ctx *iris.Context) {
+		control.UpdateKitchen(ctx)
 	})
 
 	iris.Listen("127.0.0.1:8080")

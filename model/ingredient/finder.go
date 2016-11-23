@@ -3,6 +3,8 @@ package ingredient
 import (
 	"fmt"
 	. "github.com/iHelos/VinoHomework/model"
+
+	"errors"
 )
 
 func Find(id int) (*ingredientGateway, error){
@@ -18,7 +20,10 @@ func Find(id int) (*ingredientGateway, error){
 		return nil,err
 	}
 	defer row.Close()
-	row.Next()
+	ok := row.Next()
+	if !ok{
+		return nil,  errors.New("Not Found")
+	}
 	obj := NewIngredient_DB()
 	err = row.Scan(&obj.ID, &obj.Name, &obj.Description)
 	return obj, err

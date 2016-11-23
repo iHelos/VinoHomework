@@ -2,9 +2,10 @@ package kitchen
 
 import (
 	"fmt"
-	"errors"
 	"database/sql"
 	. "github.com/iHelos/VinoHomework/model"
+
+	"github.com/kataras/go-errors"
 )
 
 type kitchenGateway struct {
@@ -49,14 +50,13 @@ func (gate *kitchenGateway) Update() error{
 	if gate.inDB == false{
 		return errors.New("object not created")
 	}
-	q := fmt.Sprintf("UPDATE %s SET %s = $1, %s = $2 WHERE %s = $5;", KitchenTable, K_name, K_description, K_ID)
+	q := fmt.Sprintf("UPDATE %s SET %s = $1, %s = $2 WHERE %s = $3;", KitchenTable, K_name, K_description, K_ID)
 	_, err := db.Exec(q, gate.Name, gate.Description, gate.ID)
 	return err
 }
 
 func makeQuery(tx *sql.Tx, query string, paramerer interface{}) error{
-	tx, err := db.Begin()
-	_, err = tx.Exec(query, paramerer)
+	_, err := tx.Exec(query, paramerer)
 	if err!= nil{
 		tx.Rollback()
 		return err

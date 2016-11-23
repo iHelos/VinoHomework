@@ -3,6 +3,7 @@ package dish
 import (
 	"fmt"
 	. "github.com/iHelos/VinoHomework/model"
+	"errors"
 )
 
 func Find(id int) (*dishGateway, error){
@@ -18,7 +19,10 @@ func Find(id int) (*dishGateway, error){
 		return nil,err
 	}
 	defer row.Close()
-	row.Next()
+	ok := row.Next()
+	if !ok{
+		return nil,  errors.New("Not Found")
+	}
 	dish_obj := NewDish_DB()
 	err = row.Scan(&dish_obj.ID, &dish_obj.Name, &dish_obj.Description, &dish_obj.Price, &dish_obj.Category)
 	return dish_obj, err

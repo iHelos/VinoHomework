@@ -3,6 +3,7 @@ package kitchen
 import (
 	"fmt"
 	. "github.com/iHelos/VinoHomework/model"
+	"errors"
 )
 
 func Find(id int) (*kitchenGateway, error){
@@ -18,7 +19,10 @@ func Find(id int) (*kitchenGateway, error){
 		return nil,err
 	}
 	defer row.Close()
-	row.Next()
+	ok := row.Next()
+	if !ok{
+		return nil, errors.New("Not Found")
+	}
 	kitchen_obj := NewKitchen_DB()
 	err = row.Scan(&kitchen_obj.ID, &kitchen_obj.Name, &kitchen_obj.Description)
 	return kitchen_obj, err

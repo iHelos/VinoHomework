@@ -97,7 +97,7 @@ func (*BusinessTransaction) ReadDish(ctx *iris.Context) (bool){
 	dish_obj, err := dish.Find(id_int)
 	if err!=nil{
 		log.Print(err)
-		ctx.JSON(iris.StatusOK, GetResponse(0, map[string]interface{}{"error":err}))
+		ctx.JSON(iris.StatusOK, GetResponse(0, map[string]interface{}{"error":err.Error()}))
 		return false
 	}
 	ctx.JSON(iris.StatusOK, GetResponse(1, map[string]interface{}{"dish":dish_obj}))
@@ -116,7 +116,7 @@ func (*BusinessTransaction) ReadIngredient(ctx *iris.Context) (bool){
 
 	if err!=nil{
 		log.Print(err)
-		ctx.JSON(iris.StatusOK, GetResponse(0, map[string]interface{}{"error":err}))
+		ctx.JSON(iris.StatusOK, GetResponse(0, map[string]interface{}{"error":err.Error()}))
 		return false
 	}
 	ctx.JSON(iris.StatusOK, GetResponse(1, map[string]interface{}{"ingredient":dish_obj}))
@@ -134,9 +134,192 @@ func (*BusinessTransaction) ReadKitchen(ctx *iris.Context) (bool){
 	dish_obj, err := kitchen.Find(id_int)
 	if err!=nil{
 		log.Print(err)
+		ctx.JSON(iris.StatusOK, GetResponse(0, map[string]interface{}{"error":err.Error()}))
+		return false
+	}
+	ctx.JSON(iris.StatusOK, GetResponse(1, map[string]interface{}{"kitchen":dish_obj}))
+	return true
+}
+
+func (*BusinessTransaction) UpdateDish(ctx *iris.Context) (bool){
+	id := ctx.Param("id")
+	id_int, err := strconv.Atoi(id)
+	if err!=nil{
+		log.Print(err)
+		ctx.JSON(iris.StatusOK, GetResponse(0, map[string]interface{}{"error":err}))
+		return false
+	}
+	dish_obj, err := dish.Find(id_int)
+	if err!=nil{
+		log.Print(err)
+		ctx.JSON(iris.StatusOK, GetResponse(0, map[string]interface{}{"error":err.Error()}))
+		return false
+	}
+	err = json.Unmarshal(ctx.Request.Body(), &dish_obj)
+	if err!=nil {
+		log.Print(err)
+		ctx.JSON(iris.StatusOK, GetResponse(0, map[string]interface{}{"error":err}))
+		return false
+	}
+	err = dish_obj.Update()
+	if err!=nil {
+		log.Print(err)
+		ctx.JSON(iris.StatusOK, GetResponse(0, map[string]interface{}{"error":err}))
+		return false
+	}
+	ctx.JSON(iris.StatusOK, GetResponse(1, map[string]interface{}{"dish":dish_obj}))
+	return true
+}
+
+func (*BusinessTransaction) UpdateIngredient(ctx *iris.Context) (bool){
+	id := ctx.Param("id")
+	id_int, err := strconv.Atoi(id)
+	if err!=nil{
+		log.Print(err)
+		ctx.JSON(iris.StatusOK, GetResponse(0, map[string]interface{}{"error":err}))
+		return false
+	}
+	dish_obj, err := ingredient.Find(id_int)
+
+	if err!=nil{
+		log.Print(err)
+		ctx.JSON(iris.StatusOK, GetResponse(0, map[string]interface{}{"error":err.Error()}))
+		return false
+	}
+	err = json.Unmarshal(ctx.Request.Body(), &dish_obj)
+	if err!=nil {
+		log.Print(err)
+		ctx.JSON(iris.StatusOK, GetResponse(0, map[string]interface{}{"error":err}))
+		return false
+	}
+	err = dish_obj.Update()
+	if err!=nil {
+		log.Print(err)
+		ctx.JSON(iris.StatusOK, GetResponse(0, map[string]interface{}{"error":err}))
+		return false
+	}
+	ctx.JSON(iris.StatusOK, GetResponse(1, map[string]interface{}{"ingredient":dish_obj}))
+	return true
+}
+
+func (*BusinessTransaction) UpdateKitchen(ctx *iris.Context) (bool){
+	id := ctx.Param("id")
+	id_int, err := strconv.Atoi(id)
+	if err!=nil{
+		log.Print(err)
+		ctx.JSON(iris.StatusOK, GetResponse(0, map[string]interface{}{"error":err}))
+		return false
+	}
+	dish_obj, err := kitchen.Find(id_int)
+	if err!=nil{
+		log.Print(err)
+		ctx.JSON(iris.StatusOK, GetResponse(0, map[string]interface{}{"error":err.Error()}))
+		return false
+	}
+	err = json.Unmarshal(ctx.Request.Body(), &dish_obj)
+	if err!=nil {
+		log.Print(err)
+		ctx.JSON(iris.StatusOK, GetResponse(0, map[string]interface{}{"error":err}))
+		return false
+	}
+	err = dish_obj.Update()
+	if err!=nil {
+		log.Print(err)
 		ctx.JSON(iris.StatusOK, GetResponse(0, map[string]interface{}{"error":err}))
 		return false
 	}
 	ctx.JSON(iris.StatusOK, GetResponse(1, map[string]interface{}{"kitchen":dish_obj}))
+	return true
+}
+
+
+func (*BusinessTransaction) RemoveDish(ctx *iris.Context) (bool){
+	id := ctx.Param("id")
+	id_int, err := strconv.Atoi(id)
+	if err!=nil{
+		log.Print(err)
+		ctx.JSON(iris.StatusOK, GetResponse(0, map[string]interface{}{"error":err}))
+		return false
+	}
+	dish_obj, err := dish.Find(id_int)
+	if err!=nil{
+		log.Print(err)
+		ctx.JSON(iris.StatusOK, GetResponse(0, map[string]interface{}{"error":err.Error()}))
+		return false
+	}
+	err = json.Unmarshal(ctx.Request.Body(), &dish_obj)
+	if err!=nil {
+		log.Print(err)
+		ctx.JSON(iris.StatusOK, GetResponse(0, map[string]interface{}{"error":err}))
+		return false
+	}
+	err = dish_obj.Remove()
+	if err!=nil {
+		log.Print(err)
+		ctx.JSON(iris.StatusOK, GetResponse(0, map[string]interface{}{"error":err}))
+		return false
+	}
+	ctx.JSON(iris.StatusOK, GetResponse(1, map[string]interface{}{"status":"ok"}))
+	return true
+}
+
+func (*BusinessTransaction) RemoveIngredient(ctx *iris.Context) (bool){
+	id := ctx.Param("id")
+	id_int, err := strconv.Atoi(id)
+	if err!=nil{
+		log.Print(err)
+		ctx.JSON(iris.StatusOK, GetResponse(0, map[string]interface{}{"error":err}))
+		return false
+	}
+	dish_obj, err := ingredient.Find(id_int)
+
+	if err!=nil{
+		log.Print(err)
+		ctx.JSON(iris.StatusOK, GetResponse(0, map[string]interface{}{"error":err.Error()}))
+		return false
+	}
+	err = json.Unmarshal(ctx.Request.Body(), &dish_obj)
+	if err!=nil {
+		log.Print(err)
+		ctx.JSON(iris.StatusOK, GetResponse(0, map[string]interface{}{"error":err}))
+		return false
+	}
+	err = dish_obj.Remove()
+	if err!=nil {
+		log.Print(err)
+		ctx.JSON(iris.StatusOK, GetResponse(0, map[string]interface{}{"error":err}))
+		return false
+	}
+	ctx.JSON(iris.StatusOK, GetResponse(1, map[string]interface{}{"status":"ok"}))
+	return true
+}
+
+func (*BusinessTransaction) RemoveKitchen(ctx *iris.Context) (bool){
+	id := ctx.Param("id")
+	id_int, err := strconv.Atoi(id)
+	if err!=nil{
+		log.Print(err)
+		ctx.JSON(iris.StatusOK, GetResponse(0, map[string]interface{}{"error":err}))
+		return false
+	}
+	dish_obj, err := kitchen.Find(id_int)
+	if err!=nil{
+		log.Print(err)
+		ctx.JSON(iris.StatusOK, GetResponse(0, map[string]interface{}{"error":err.Error()}))
+		return false
+	}
+	err = json.Unmarshal(ctx.Request.Body(), &dish_obj)
+	if err!=nil {
+		log.Print(err)
+		ctx.JSON(iris.StatusOK, GetResponse(0, map[string]interface{}{"error":err}))
+		return false
+	}
+	err = dish_obj.Remove()
+	if err!=nil {
+		log.Print(err)
+		ctx.JSON(iris.StatusOK, GetResponse(0, map[string]interface{}{"error":err}))
+		return false
+	}
+	ctx.JSON(iris.StatusOK, GetResponse(1, map[string]interface{}{"status":"ok"}))
 	return true
 }
