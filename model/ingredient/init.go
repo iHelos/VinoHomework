@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"log"
 	"fmt"
+	. "github.com/iHelos/VinoHomework/model"
 )
 
 var db *sql.DB
