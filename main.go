@@ -36,25 +36,25 @@ func init(){
 func main() {
 	//CREATE
 
-	iris.Post("/dish/create", func(ctx *iris.Context) {
+	iris.Any("/dish/create", func(ctx *iris.Context) {
 		control.CreateDish(ctx)
 	})
-	iris.Post("/ingredient/create", func(ctx *iris.Context) {
+	iris.Any("/ingredient/create", func(ctx *iris.Context) {
 		control.CreateIngredient(ctx)
 	})
-	iris.Post("/kitchen/create", func(ctx *iris.Context) {
+	iris.Any("/kitchen/create", func(ctx *iris.Context) {
 		control.CreateKitchen(ctx)
 	})
 
 	//DELETE
 
-	iris.Post("/dish/delete/:id", func(ctx *iris.Context) {
+	iris.Any("/dish/delete/:id", func(ctx *iris.Context) {
 		control.RemoveDish(ctx)
 	})
-	iris.Post("/ingredient/delete/:id", func(ctx *iris.Context) {
+	iris.Any("/ingredient/delete/:id", func(ctx *iris.Context) {
 		control.RemoveIngredient(ctx)
 	})
-	iris.Post("/kitchen/delete/:id", func(ctx *iris.Context) {
+	iris.Any("/kitchen/delete/:id", func(ctx *iris.Context) {
 		control.RemoveKitchen(ctx)
 	})
 
@@ -72,13 +72,13 @@ func main() {
 
 	//UPDATE
 
-	iris.Post("/dish/update/:id", func(ctx *iris.Context) {
+	iris.Any("/dish/update/:id", func(ctx *iris.Context) {
 		control.UpdateDish(ctx)
 	})
-	iris.Post("/ingredient/update/:id", func(ctx *iris.Context) {
+	iris.Any("/ingredient/update/:id", func(ctx *iris.Context) {
 		control.UpdateIngredient(ctx)
 	})
-	iris.Post("/kitchen/update/:id", func(ctx *iris.Context) {
+	iris.Any("/kitchen/update/:id", func(ctx *iris.Context) {
 		control.UpdateKitchen(ctx)
 	})
 
