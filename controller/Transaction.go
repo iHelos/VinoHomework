@@ -35,6 +35,7 @@ func (*BusinessTransaction) Start() (bool){
 func (*BusinessTransaction) CreateDish(ctx *iris.Context) (bool){
 	dish_obj := dish.NewDish()
 	err := json.Unmarshal(ctx.Request.Body(), &dish_obj)
+	log.Print(dish_obj)
 	if err!=nil {
 		log.Print(err)
 		ctx.JSON(iris.StatusOK, GetResponse(0, map[string]interface{}{"error":err}))

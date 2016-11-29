@@ -5,6 +5,7 @@ import (
 	"errors"
 	"database/sql"
 	. "github.com/iHelos/VinoHomework/model"
+	"github.com/labstack/gommon/log"
 )
 
 type dishGateway struct {
@@ -14,6 +15,8 @@ type dishGateway struct {
 	Description string
 	Price int
 	Category int
+	Ingredient []string
+	Kitchen []string
 }
 
 func NewDish() *dishGateway{
@@ -53,6 +56,23 @@ func (gate *dishGateway) Insert() error{
 	defer res.Close()
 	res.Next()
 	err = res.Scan(&gate.ID)
+
+	q_kitchen := fmt.Sprintf("insert into %s (%s,%s) values ($1,$2)", DKTable, DK_dish_ID, DK_kitchen_ID)
+	for _, element := range gate.Kitchen {
+		_, err = db.Exec(q_kitchen, gate.ID, element)
+		if err!=nil{
+			log.Print(err)
+		}
+	}
+
+	q_ingredient := fmt.Sprintf("insert into %s (%s,%s) values ($1,$2)", DITable, DI_dish_ID, DI_ingredient_ID)
+	for _, element := range gate.Ingredient {
+		_, err = db.Exec(q_ingredient, gate.ID, element)
+		if err!=nil{
+			log.Print(err)
+		}
+	}
+
 	return err
 }
 
