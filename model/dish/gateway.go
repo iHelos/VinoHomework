@@ -84,10 +84,16 @@ func (gate *dishGateway) Update() error{
 	_, err := db.Exec(q, gate.Name, gate.Description, gate.Price, gate.Category, gate.ID)
 
 	q2 := fmt.Sprintf("DELETE FROM %s WHERE %s = $1;", DKTable, DK_dish_ID)
-	q3 := fmt.Sprintf("DELETE FROM %s WHERE %s = $1;", DishTable, D_ID)
+	q3 := fmt.Sprintf("DELETE FROM %s WHERE %s = $1;", DITable, DI_dish_ID)
 
 	_, err = db.Exec(q2, gate.ID)
+	if (err!=nil){
+		log.Print(err);
+	}
 	_, err = db.Exec(q3, gate.ID)
+	if (err!=nil){
+		log.Print(err);
+	}
 
 	q_kitchen := fmt.Sprintf("insert into %s (%s,%s) values ($1,$2)", DKTable, DK_dish_ID, DK_kitchen_ID)
 	for _, element := range gate.Kitchen {
