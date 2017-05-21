@@ -1,0 +1,40 @@
+<edu>
+    <vuz abbr="MinObr" city="Moscow">
+        <title>MINISTERSTVO MAGII</title>
+        <kafs>
+            <kaf col="60">
+                <kname>ОК</kname>
+            </kaf>
+        </kafs>
+    </vuz>
+    <vuz abbr="PGNIU" city="Perm">
+        <title>PERMSKIY VUZ</title>
+        <kafs/>
+    </vuz>
+    <vuz abbr="MGU" city="Moscow">
+        <title>MOSCOW GOS UNIVER</title>
+        <kafs/>
+    </vuz>
+    <vuz abbr="SPBGU" city="SPB">
+        <title>SPB UNIVER</title>
+        <kafs>
+            <kaf col="35">
+                <kname>KK</kname>
+            </kaf>
+        </kafs>
+    </vuz>
+    <vuz abbr="MGTU" city="Moscow">
+        <title>BAUMAN YOOOO</title>
+        <kafs>
+            <kaf col="20">
+                <kname>IU</kname>
+            </kaf>
+            <kaf col="20">
+                <kname>RK</kname>
+            </kaf>
+            <kaf col="40">
+                <kname>OK</kname>
+            </kaf>
+        </kafs>
+    </vuz>
+</edu>
